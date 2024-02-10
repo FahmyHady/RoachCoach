@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5126a35b02169bf4c9f319208020da8e, type: 3}
+  m_Name: Prefab Config
+  m_EditorClassIdentifier: 
+  chefPrefabs:
+  - {fileID: 8948641144421996453, guid: b3bf381a604349f4c85bbe90765ba6ed, type: 3}
+  - {fileID: 5700569344918489781, guid: 812fd97bff3200e4d87a5dbd1ab81b1c, type: 3}
+  - {fileID: 5916004335571153969, guid: 6ea4e7e5fe381a2479fa245267751e9d, type: 3}
+  customerPrefabs: []
+  itemBox: {fileID: 0}
+  machine: {fileID: 0}
+  machineStand: {fileID: 0}
