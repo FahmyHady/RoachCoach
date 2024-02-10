@@ -8,24 +8,17 @@ namespace RoachCoach
 {
     public class Visual : MonoBehaviour, IVisual, IRoachCoachGameTransformAddedListener, IRoachCoachGameDestroyedAddedListener
     {
-        Game.Entity entity;
-        public virtual void Link(Game.Entity entity)
+        Game.Entity linkedEntity;
+        public virtual void Link(Entity entity)
         {
-            this.entity = entity;
             gameObject.Link(entity);
-            this.entity.AddTransformAddedListener(this);
-            this.entity.AddDestroyedAddedListener(this);
+            this.linkedEntity =(Game.Entity) entity;
+            this.linkedEntity.AddTransformAddedListener(this);
+            this.linkedEntity.AddDestroyedAddedListener(this);
 
-            var transformComponent = entity.GetTransform();
+            var transformComponent = linkedEntity.GetTransform();
             transform.localPosition = transformComponent.position;
             transform.localRotation = transformComponent.rotation;
-        }
-
-
-        public virtual void OnTransformAdded(Game.Entity entity, Vector3 position, Quaternion rotation)
-        {
-            transform.position = position;
-            transform.rotation = rotation;
         }
 
         public void OnDestroyedAdded(Game.Entity entity)
@@ -42,6 +35,12 @@ namespace RoachCoach
         public GameObject GetConnectedObject()
         {
             return gameObject;
+        }
+
+        public virtual void OnTransformAdded(Game.Entity entity, Vector3 position, Quaternion rotation)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
         }
     }
 }

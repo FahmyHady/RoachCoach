@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 663017437272404913}
   - component: {fileID: 4210590986921553610}
   - component: {fileID: 1174017147455208269}
-  - component: {fileID: -7045723690201514409}
+  - component: {fileID: 6119676366502176563}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Untagged
@@ -168,7 +168,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7045723690201514409
+--- !u!114 &6119676366502176563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

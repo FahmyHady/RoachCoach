@@ -17,12 +17,15 @@ namespace RoachCoach
 
             var gameContext = GameContext.Instance;
             var configContext = ConfigContext.Instance;
+            var inputContext = InputContext.Instance;
 
             gameContext.CreateContextObserver();
             configContext.CreateContextObserver();
+            inputContext.CreateContextObserver();
+
             configContext.SetGameConfig(gameConfig);
             configContext.SetPrefabConfig(prefabConfig);
-            systems = new GameSystems(gameContext, gameConfig);
+            systems = new GameSystems(gameContext, configContext,inputContext);
         }
         private void Start()
         {

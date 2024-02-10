@@ -8,6 +8,6 @@ namespace RoachCoach
     public interface IVisual 
     {
         public GameObject GetConnectedObject();
-        public void Link(Game.Entity entity);
+        public void Link(Entity entity);
     }
 }
