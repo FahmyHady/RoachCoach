@@ -1,13 +1,13 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RoachCoach
 {
-    public interface IVisual 
+    [Context(typeof(GameContext))]
+    public sealed class FreeComponent : IComponent
     {
-        public GameObject GetConnectedObject();
-        public void Link(Game.Entity entity);
     }
 }

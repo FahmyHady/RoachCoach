@@ -12,6 +12,8 @@ namespace RoachCoach
             // Add(new TutorialSystems(gameContext));
             Add(new VisualsCreationSystem(gameContext));
             Add(new GameIntializationSystem(gameContext, gameConfig));
+            Add(new OutletIntializationSystem(gameContext));
+            Add(new ChefBrainSystem(gameContext));
             // Add(gameContext.CreateEventSystems());
             //Add(gameContext.CreateCleanupSystems());
         }

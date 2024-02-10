@@ -10,6 +10,7 @@ namespace RoachCoach
         public GameObject itemBox;
         public GameObject machine;
         public GameObject machineStand;
+        public GameObject outlet;
         public GameObject GetPrefab(VisualType type)
         {
             switch (type)
@@ -20,10 +21,14 @@ namespace RoachCoach
                     return customerPrefabs.RandomElement();
                 case VisualType.ItemBox:
                     return itemBox;
-                case VisualType.Machine:
+                case VisualType.TacoMachine:
                     return machine;
-                case VisualType.MachineStand:
+                case VisualType.TacoMachineStand:
                     return machineStand;
+                case VisualType.Outlet:
+                    return outlet;
+                case VisualType.SodaMachine:
+                case VisualType.SodaMachineStand:
                 default:
                     return null;
             }

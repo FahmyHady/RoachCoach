@@ -12,10 +12,10 @@ namespace RoachCoach
         public virtual void Link(Game.Entity entity)
         {
             this.entity = entity;
+            gameObject.Link(entity);
             this.entity.AddTransformAddedListener(this);
             this.entity.AddDestroyedAddedListener(this);
 
-            gameObject.Link(entity);
             var transformComponent = entity.GetTransform();
             transform.localPosition = transformComponent.position;
             transform.localRotation = transformComponent.rotation;
@@ -37,6 +37,11 @@ namespace RoachCoach
         protected virtual void OnDestroy()
         {
             gameObject.Unlink();
+        }
+
+        public GameObject GetConnectedObject()
+        {
+            return gameObject;
         }
     }
 }

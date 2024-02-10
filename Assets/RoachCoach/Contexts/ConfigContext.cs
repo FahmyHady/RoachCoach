@@ -12,6 +12,5 @@ namespace RoachCoach
 
         static ConfigContext _instance;
     }
-public enum VisualType { Chef, Customer, ItemBox, Machine, MachineStand }
 
 }

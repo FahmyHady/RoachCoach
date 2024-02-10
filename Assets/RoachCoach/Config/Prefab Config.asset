@@ -20,3 +20,4 @@ MonoBehaviour:
   itemBox: {fileID: 0}
   machine: {fileID: 0}
   machineStand: {fileID: 0}
+  outlet: {fileID: 2042465160922250375, guid: fb990b215bb37434b9f785df51d7a9b0, type: 3}

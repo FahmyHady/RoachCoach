@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static RoachCoach.RoachCoachGameVisualRepresentationMatcher;
-
+using RoachCoach.Game;
 namespace RoachCoach
 {
     public class VisualsCreationSystem : ReactiveSystem<Game.Entity>
@@ -20,16 +20,16 @@ namespace RoachCoach
         protected override void Execute(List<Game.Entity> entities)
         {
             foreach (var entity in entities)
-                CreateAndLink(entity);
+                entity.AddVisualReference(InstantiateVisual(entity));
         }
-        void CreateAndLink(Game.Entity entity)
+        IVisual InstantiateVisual(Game.Entity entity)
         {
-            //Could've used Resources.Load but don't want to rely on magic strings
             var visualType = entity.GetVisualRepresentation().Type;
+            //Could've used Resources.Load but don't want to rely on magic strings
             GameObject prefab = ConfigContext.Instance.GetPrefabConfig().Value.GetPrefab(visualType);
-            var gameObject = GameObject.Instantiate(prefab, visualParents[visualType]);
-            gameObject.GetComponent<IVisual>().Link(entity);
-
+            var visual = GameObject.Instantiate(prefab, visualParents[visualType]).GetComponent<IVisual>();
+            visual.Link(entity);
+            return visual;
         }
         protected override bool Filter(Game.Entity entity)
         {
@@ -38,7 +38,7 @@ namespace RoachCoach
 
         protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context)
         {
-            return context.CreateCollector(VisualRepresentation);
+            return context.CreateCollector(Matcher.AnyOf(VisualRepresentation));
         }
     }
 }

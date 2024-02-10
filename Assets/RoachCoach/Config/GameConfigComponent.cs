@@ -13,6 +13,7 @@ namespace RoachCoach
 
     public interface IGameConfig
     {
+        public (Vector3, Quaternion) GetOutletTransform();
         public (Vector3, Quaternion) GetNextChefTransform();
         public (Vector3, Quaternion) GetNextCustomerTransform();
         public (Vector3, Quaternion) GetNextMachineStandTransform();

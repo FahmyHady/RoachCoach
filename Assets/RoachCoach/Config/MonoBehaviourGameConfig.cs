@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace RoachCoach
@@ -14,6 +15,7 @@ namespace RoachCoach
         [SerializeField] Spot[] chefCreationSpots;
         [SerializeField] Spot[] machineStandsCreationSpots;
         [SerializeField] Spot[] customerSpots;
+        [SerializeField] Spot outletSpot;
         public int StartingChefNumber => startingChefsNumber;
         public int StartingCustomerCount => startingCustomerNumber;
         public int StartingMachineStands => startingMachineStandsNumber;
@@ -44,6 +46,11 @@ namespace RoachCoach
         public (Vector3, Quaternion) GetNextMachineTransform()
         {
             throw new System.NotImplementedException();
+        }
+
+        public (Vector3, Quaternion) GetOutletTransform()
+        {
+            return (outletSpot.spotTransform.position, outletSpot.spotTransform.rotation);
         }
     }
     [System.Serializable]
