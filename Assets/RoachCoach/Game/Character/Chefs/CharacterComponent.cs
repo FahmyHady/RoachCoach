@@ -1,11 +1,9 @@
-using Entitas;
+﻿using Entitas;
 using Entitas.Generators.Attributes;
-
 namespace RoachCoach
 {
     [Context(typeof(GameContext))]
-    public sealed class ChefComponent : IComponent
+    public sealed class CharacterComponent : IComponent
     {
     }
 }
-

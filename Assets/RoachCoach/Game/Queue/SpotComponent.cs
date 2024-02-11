@@ -8,5 +8,11 @@ namespace RoachCoach
     [Context(typeof(GameContext))]
     public sealed class SpotComponent : IComponent
     {
+
+    }
+    [Context(typeof(GameContext))]
+    public sealed class RelatedSpotComponent : IComponent
+    {
+        public Game.Entity RelatedSpot;
     }
 }

@@ -8,7 +8,7 @@ namespace RoachCoach
 {
     public class GameController : MonoBehaviour
     {
-        [SerializeField] MonoBehaviourGameConfig gameConfig;
+        [SerializeField] ShopConfigMonobehaviour shopConfig;
         [SerializeField] ScriptablePrefabConfig prefabConfig;
         Systems systems;
         private void Awake()
@@ -23,7 +23,7 @@ namespace RoachCoach
             configContext.CreateContextObserver();
             inputContext.CreateContextObserver();
 
-            configContext.SetGameConfig(gameConfig);
+            configContext.SetShopConfig(shopConfig);
             configContext.SetPrefabConfig(prefabConfig);
             systems = new GameSystems(gameContext, configContext,inputContext);
         }

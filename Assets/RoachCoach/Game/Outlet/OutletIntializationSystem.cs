@@ -23,8 +23,8 @@ namespace RoachCoach
                 var outLetSlots = entity.GetVisualReference().visualInterface.GetConnectedObject().GetComponent<OutletMonobehaviour>().customerSpots;
                 foreach (var item in outLetSlots)
                 {
-                    var customerSlot = _gameContext.CreateSpot(item.one.position, item.one.rotation, new IComponent[] { new CustomerComponent(), new OutletComponent() });
-                    var relatedChefSlot = _gameContext.CreateSpot(item.two.position, item.two.rotation, new IComponent[] { new ChefComponent(), new OutletComponent() });
+                    var relatedChefSlot = _gameContext.CreateSpot(item.two.position, item.two.rotation).AddChef().AddOutlet();
+                    var customerSlot = _gameContext.CreateSpot(item.one.position, item.one.rotation).AddCustomer().AddOutlet().AddRelatedSpot(relatedChefSlot);
                     spotsMap.Add(customerSlot, relatedChefSlot);
                 }
                 //entity.ReplaceOutlet(spotsMap);

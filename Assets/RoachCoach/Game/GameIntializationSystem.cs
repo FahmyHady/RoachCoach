@@ -10,9 +10,9 @@ namespace RoachCoach
     public class GameIntializationSystem : IInitializeSystem
     {
         readonly GameContext gameContext;
-        readonly IGameConfig gameConfig;
+        readonly IShopConfig gameConfig;
 
-        public GameIntializationSystem(GameContext _gameContext, IGameConfig gameConfig) 
+        public GameIntializationSystem(GameContext _gameContext, IShopConfig gameConfig) 
         {
             this.gameContext = _gameContext;
             this.gameConfig = gameConfig;

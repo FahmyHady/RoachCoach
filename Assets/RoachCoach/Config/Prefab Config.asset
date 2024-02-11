@@ -16,8 +16,13 @@ MonoBehaviour:
   - {fileID: 8948641144421996453, guid: b3bf381a604349f4c85bbe90765ba6ed, type: 3}
   - {fileID: 5700569344918489781, guid: 812fd97bff3200e4d87a5dbd1ab81b1c, type: 3}
   - {fileID: 5916004335571153969, guid: 6ea4e7e5fe381a2479fa245267751e9d, type: 3}
-  customerPrefabs: []
+  customerPrefabs:
+  - {fileID: 8948641144421996453, guid: 3300f168292d55748b06f372edfc8324, type: 3}
+  - {fileID: 3919459300482912206, guid: 2470e29a8727ef54e8e300ffc0a2c36b, type: 3}
+  - {fileID: 462072185057123145, guid: 179bb9d1b64efa64eac3f9ed161574cd, type: 3}
   itemBox: {fileID: 0}
   machine: {fileID: 0}
   machineStand: {fileID: 0}
   outlet: {fileID: 2042465160922250375, guid: fb990b215bb37434b9f785df51d7a9b0, type: 3}
+  sodaOrder: {fileID: 5515855008777161667, guid: 900fac68d0c6f0f43a50ac215b236932,
+    type: 3}

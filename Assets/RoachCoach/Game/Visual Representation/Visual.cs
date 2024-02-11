@@ -8,11 +8,11 @@ namespace RoachCoach
 {
     public class Visual : MonoBehaviour, IVisual, IRoachCoachGameTransformAddedListener, IRoachCoachGameDestroyedAddedListener
     {
-        Game.Entity linkedEntity;
+        protected Game.Entity linkedEntity;
         public virtual void Link(Entity entity)
         {
             gameObject.Link(entity);
-            this.linkedEntity =(Game.Entity) entity;
+            this.linkedEntity = (Game.Entity)entity;
             this.linkedEntity.AddTransformAddedListener(this);
             this.linkedEntity.AddDestroyedAddedListener(this);
 
