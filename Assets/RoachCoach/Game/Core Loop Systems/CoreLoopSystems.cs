@@ -20,7 +20,8 @@ namespace RoachCoach
             Add(new ChefMoveToTakeOrderSystem(gameContext, configContext));
             Add(new ChefTakingTheOrderSystem(gameContext, configContext));
             Add(new CreateOrderSystem(gameContext, configContext));
-            Add(new MoveToFulfillOpenOrderSystem(gameContext, configContext));
+            Add(new FreeChefsPickupFreeSodaOrdersAndGoToMachineSystem(gameContext, configContext));
+            Add(new FreeChefsPickupFreeTacoOrdersAndGoToMachineSystem(gameContext, configContext));
             Add(new WaitingForMachineToFinishCookingSystem(gameContext, configContext));
             Add(new CreateCookedCommoditySystem(gameContext, configContext));
             Add(new ChefMovingBackToCustomerSystem(gameContext, configContext));

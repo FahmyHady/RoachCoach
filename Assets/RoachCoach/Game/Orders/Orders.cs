@@ -37,5 +37,20 @@ namespace RoachCoach
     {
         public Game.Entity RelatedCustomer;
     }
+    [Context(typeof(GameContext))]
+    public sealed class RelatedChefsCountComponent : IComponent
+    {
+        public int RelatedChefsCount;
+    }
+    [Context(typeof(GameContext))]
+    public sealed class RelatedOrderComponent : IComponent
+    {
+        public Game.Entity RelatedOrder;
+    }
+    [Context(typeof(GameContext))]
+    public sealed class RelatedMachineComponent : IComponent
+    {
+        public Game.Entity RelatedMachine;
+    }
 
 }

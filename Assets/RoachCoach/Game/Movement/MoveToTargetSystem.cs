@@ -28,7 +28,7 @@ namespace RoachCoach
                 targetLocation = entity.GetTargetLocation();
                 if (Vector3.Distance(currentTransform.position, targetLocation.targetPos) > Vector3.kEpsilon)
                 {
-                    pos = Vector3.MoveTowards(currentTransform.position, targetLocation.targetPos, entity.GetMotor().speed * Time.deltaTime);
+                    pos = Vector3.MoveTowards(currentTransform.position, targetLocation.targetPos, entity.GetMotor().Value * Time.deltaTime);
                     rot = Quaternion.LookRotation((targetLocation.targetPos - currentTransform.position).normalized, Vector3.up);
                     entity.ReplaceTransform(pos, rot);
                 }
