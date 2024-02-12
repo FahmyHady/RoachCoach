@@ -15,10 +15,9 @@ namespace RoachCoach
     public interface IShopConfig
     {
         public (Vector3, Quaternion) GetOutletTransform();
-        public (Vector3, Quaternion) GetNextChefTransform();
-        public (Vector3, Quaternion) GetNextCustomerTransform();
-        public Tuple<Vector3, Quaternion>[] GetMachineStandsTransform();
-        public (Vector3, Quaternion) GetNextMachineTransform();
+        public (Vector3, Quaternion)[] GetCustomerCreationSpots();
+        public (Vector3, Quaternion)[] GetChefCreationSpots();
+        public (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] GetMachineCreationData();
         public (CommodityType, int) GetOrderData();
         int StartingChefNumber { get; }
         float ChefMovementSpeed { get; }

@@ -29,7 +29,7 @@ namespace RoachCoach
             var openOrders = gameContext.GetEntities(Game.Matcher.AllOf(Free, Order, Soda));
             if (openOrders.Length == 0) return;
             var freeChefs = gameContext.GetEntities(Game.Matcher.AllOf(Free, Chef, Character));
-            int count = Mathf.Min(openOrders.Length, freeChefs.Length);
+            int count = Mathf.Min(openOrders.Length, freeChefs.Length, openSodaMachines.Length);
             if (count == 0) return;
 
             for (int i = 0; i < count; i++)
@@ -47,6 +47,31 @@ namespace RoachCoach
             }
 
         }
+        //     public void Execute()
+        //{
+        //    var openSodaMachines = gameContext.GetEntities(Game.Matcher.AllOf(Free, Machine, Soda));
+        //    if (openSodaMachines.Length == 0) return;
+        //    var openOrders = gameContext.GetEntities(Game.Matcher.AllOf(Free, Order, Soda));
+        //    if (openOrders.Length == 0) return;
+        //    var freeChefs = gameContext.GetEntities(Game.Matcher.AllOf(Free, Chef, Character));
+        //    int count = Mathf.Min(openOrders.Length, freeChefs.Length, openSodaMachines.Length);
+        //    if (count == 0) return;
+
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        var machine = openSodaMachines[i];
+        //        var order = openOrders[i];
+        //        var chef = freeChefs[i];
+        //        order.RemoveFree();
+        //        chef.RemoveFree();
+        //        machine.RemoveFree();
+
+        //        chef.AddTargetLocation(machine.GetTransform().position);
+        //        chef.AddMovingToMakeAnOrder();
+        //        chef.AddSoda(1);
+        //    }
+
+        //}
 
     }
 }

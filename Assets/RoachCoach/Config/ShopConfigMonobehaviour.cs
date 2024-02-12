@@ -8,6 +8,13 @@ namespace RoachCoach
 {
     public class ShopConfigMonobehaviour : MonoBehaviour, IShopConfig
     {
+        [System.Serializable]
+        public class MachineCreationData
+        {
+            public CommodityType commodityType;
+            public Transform machineStandSpot;
+            public Transform[] machinesCreationSpots;
+        }
         [SerializeField, Range(0, 3)] int startingChefsNumber = 1;
         [SerializeField, Range(0, 5)] float chefOrderTakingDuration = 1;
         [SerializeField] float chefMoveSpeed = 3;
@@ -16,7 +23,7 @@ namespace RoachCoach
         [SerializeField, Range(0, 3)] int startingMachineStandsNumber = 1;
 
         [SerializeField] Transform[] chefCreationSpots;
-        [SerializeField] Transform[] machineStandsCreationSpots;
+        [SerializeField] MachineCreationData[] machineStandsCreationSpots;
         [SerializeField] Transform[] customerCreationSpots;
         [SerializeField] Transform outletSpot;
 
@@ -32,33 +39,50 @@ namespace RoachCoach
 
         public float CustomerMovementSpeed => customerSpeed;
 
-        public (Vector3, Quaternion) GetNextChefTransform()
+        public (Vector3, Quaternion)[] GetChefCreationSpots()
         {
-            var spot = chefCreationSpots.RandomElement();
-            return (spot.position, spot.rotation);
+            (Vector3, Quaternion)[] values = new (Vector3, Quaternion)[chefCreationSpots.Length];
+            for (int i = 0; i < chefCreationSpots.Length; i++)
+            {
+                values[i].Item1 = chefCreationSpots[i].position;
+                values[i].Item2 = chefCreationSpots[i].rotation;
+            }
+            return values;
         }
 
-        public (Vector3, Quaternion) GetNextCustomerTransform()
+        public (Vector3, Quaternion)[] GetCustomerCreationSpots()
         {
-            var spot = customerCreationSpots.RandomElement();
-            return (spot.position, spot.rotation);
+            (Vector3, Quaternion)[] values = new (Vector3, Quaternion)[customerCreationSpots.Length];
+            for (int i = 0; i < customerCreationSpots.Length; i++)
+            {
+                values[i].Item1 = customerCreationSpots[i].position;
+                values[i].Item2 = customerCreationSpots[i].rotation;
+            }
+            return values;
         }
-
-        public Tuple<Vector3, Quaternion>[] GetMachineStandsTransform()
+        public (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] GetMachineCreationData()
         {
-            Tuple<Vector3, Quaternion>[] transformComponent = new Tuple<Vector3, Quaternion>[machineStandsCreationSpots.Length];
+            (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] values = new (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[machineStandsCreationSpots.Sum(a => a.machinesCreationSpots.Length)];
+
             for (int i = 0; i < machineStandsCreationSpots.Length; i++)
             {
-                transformComponent[i] = new Tuple<Vector3, Quaternion>(machineStandsCreationSpots[i].position, machineStandsCreationSpots[i].rotation);
+                var relatedData = machineStandsCreationSpots[i];
+
+                for (int j = 0; j < relatedData.machinesCreationSpots.Length; j++)
+                {
+                    var currentMachine = values[j];
+                    currentMachine.type = relatedData.commodityType;
+                    currentMachine.posOfMachineStand = relatedData.machineStandSpot.position;
+                    currentMachine.rotationOfMachineStand = relatedData.machinesCreationSpots[j].rotation;
+                    currentMachine.posOfMachine = relatedData.machinesCreationSpots[j].position;
+                    currentMachine.rotationOfMachine = relatedData.machinesCreationSpots[j].rotation;
+                }
             }
 
-            return transformComponent;
+            return values;
         }
 
-        public (Vector3, Quaternion) GetNextMachineTransform()
-        {
-            throw new System.NotImplementedException();
-        }
+
 
         public (Vector3, Quaternion) GetOutletTransform()
         {
