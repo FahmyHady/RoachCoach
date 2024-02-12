@@ -12,10 +12,10 @@ namespace RoachCoach
         public IntializationSystems(GameContext gameContext, ConfigContext configContext)
         {
             //Intializers
-            Add(new OutletIntializationSystem(gameContext));
-            Add(new CustomersIntializationSystem(gameContext, configContext));
-            Add(new ChefsIntializationSystem(gameContext, configContext));
-            Add(new MachinesIntializationSystem(gameContext, configContext));
+            Add(new OutletIntializationSystem(gameContext, configContext));
+            Add(new CustomerIntializationSystem(gameContext, configContext));
+            Add(new ChefIntializationSystem(gameContext, configContext));
+            Add(new MachineIntializationSystem(gameContext, configContext));
 
             //Creators
             Add(new CreateOutletSystem(gameContext,configContext));

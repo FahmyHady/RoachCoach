@@ -46,24 +46,6 @@ namespace RoachCoach
         }
 
 
-        public static Game.Entity CreateTacoMachine(this GameContext context)
-        {
-            var gameConfig = ConfigContext.Instance.GetShopConfig().Value;
-            var chefTransform = gameConfig.GetNextChefTransform();
-            return context.CreateEntity()
-                .AddChef()
-                .AddTransform(chefTransform.Item1, chefTransform.Item2)
-                .AddMotor(gameConfig.ChefMovementSpeed)
-                .AddVisualRepresentation(VisualType.TacoMachine);
-        }
-        public static Game.Entity CreateTacoMachineStand(this GameContext context)
-        {
-            var gameConfig = ConfigContext.Instance.GetShopConfig().Value;
-            var machineStandTransform = gameConfig.GetNextMachineTransform();
-            return context.CreateEntity()
-                .AddTransform(machineStandTransform.Item1, machineStandTransform.Item2)
-                .AddVisualRepresentation(VisualType.TacoMachineStand);
-        }
         public static Game.Entity CreateOrder(this GameContext context, Vector3 pos)
         {
             var gameConfig = ConfigContext.Instance.GetShopConfig().Value;

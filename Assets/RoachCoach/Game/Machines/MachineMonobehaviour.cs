@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RoachCoach
 {
-    public class MachineMonobehaviour : Visual, IMachine
+    public class MachineMonobehaviour : Visual, IMachineVisual
     {
         [System.Serializable]
         public struct MachineData

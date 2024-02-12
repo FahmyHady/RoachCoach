@@ -10,13 +10,10 @@ namespace RoachCoach
         public GameSystems(GameContext gameContext, ConfigContext configContext, InputContext inputContext)
         {
             // Add(new TutorialSystems(gameContext));
+            Add(new IntializationSystems(gameContext, configContext));
             Add(new VisualsCreationSystem(gameContext, configContext));
-            Add(new GameIntializationSystem(gameContext, configContext.GetShopConfig().Value));
-            Add(new ChefBrainSystem(gameContext));
             Add(new DelaySystem(gameContext));
             Add(new MoveToTargetSystem(gameContext));
-            Add(new OutletIntializationSystem(gameContext));
-            Add(new CreateCustomerSystem(gameContext, configContext));
             Add(new PlaceOrderSystem(gameContext, configContext));
             Add(new MoveToTakeOrderSystem(gameContext, configContext));
             Add(new CreateOrderSystem(gameContext, configContext));
