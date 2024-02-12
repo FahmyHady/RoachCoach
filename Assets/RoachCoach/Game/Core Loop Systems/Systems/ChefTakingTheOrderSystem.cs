@@ -1,18 +1,18 @@
 using Entitas;
 using System.Collections.Generic;
-using static RoachCoach.RoachCoachGameCustomerMatcher;
+using static RoachCoach.RoachCoachGameChefMatcher;
 using static RoachCoach.RoachCoachGameTargetLocationMatcher;
-using static RoachCoach.RoachCoachGameMovingToOrderSomethingMatcher;
+using static RoachCoach.RoachCoachGameMovingToTakeAnOrderMatcher;
 using static RoachCoach.RoachCoachGameCharacterMatcher;
 namespace RoachCoach
 {
-    public class PlaceOrderSystem : ReactiveSystem<Game.Entity>
+    public class ChefTakingTheOrderSystem : ReactiveSystem<Game.Entity>
     {
         private readonly GameContext gameContext;
         private readonly ConfigContext configContext;
         private readonly IShopConfig shopConfig;
 
-        public PlaceOrderSystem(GameContext gameContext, ConfigContext configContext) : base(gameContext)
+        public ChefTakingTheOrderSystem(GameContext gameContext, ConfigContext configContext) : base(gameContext)
         {
             this.gameContext = gameContext;
             this.configContext = configContext;
@@ -22,21 +22,20 @@ namespace RoachCoach
         {
             foreach (var entity in entities)
             {
-                entity.RemoveMovingToOrderSomething();
-                entity.AddOrder();
-                entity.AddFree();
-                //Idle customer waiting for chef to take his order
+                entity.RemoveMovingToTakeAnOrder();
+                entity.AddDelay(shopConfig.ChefOrderTakingDuration);
+                entity.AddTakingAnOrder();//chef is taking order
             }
         }
 
         protected override bool Filter(Game.Entity entity)
         {
-            return entity.HasMovingToOrderSomething() && !entity.HasTargetLocation();
+            return !entity.HasTargetLocation() && entity.HasMovingToTakeAnOrder();
         }
 
         protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context)
         {
-            return context.CreateCollector(Game.Matcher.AllOf(Customer, Character, MovingToOrderSomething).NoneOf(TargetLocation));
+            return context.CreateCollector(Game.Matcher.AllOf(Chef, Character, MovingToTakeAnOrder).NoneOf(TargetLocation));
         }
 
 

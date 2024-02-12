@@ -22,7 +22,7 @@ namespace RoachCoach
         public void Execute()
         {
             int maxCustomerCount = configContext.GetShopConfig().Value.MaxCustomerCount;
-            int currentCustomerCount = gameContext.GetEntities(Game.Matcher.AnyOf(Customer, Character)).Length;
+            int currentCustomerCount = gameContext.GetEntities(Game.Matcher.AllOf(Customer, Character)).Length;
             int difference = maxCustomerCount - currentCustomerCount;
             if (difference <= 0) return;
             var freeOutletSpots = gameContext.GetEntities(Game.Matcher.AllOf(Free, Outlet, Customer, Spot));
@@ -52,7 +52,7 @@ namespace RoachCoach
                 .AddVisualRepresentation(VisualType.Customer)
                 .AddMovingToOrderSomething()
                 .AddTargetLocation(targetTransform.position)
-                .AddRelatedSpot(targetSpot);
+                .AddRelatedSpot(targetSpot); //Customer Spot
 
         }
     }

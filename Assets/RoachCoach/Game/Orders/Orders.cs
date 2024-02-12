@@ -23,7 +23,19 @@ namespace RoachCoach
     [Context(typeof(GameContext))]
     public sealed class OrderComponent : IComponent
     {
-        //public CommodityType commodityType;
-        //public int amount;
     }
+    [Context(typeof(GameContext))]
+    public sealed class TakingAnOrderComponent : IComponent
+    {
+    }
+    [Context(typeof(GameContext))]
+    public sealed class WaitingToPlaceOrderComponent : IComponent
+    {
+    }
+    [Context(typeof(GameContext))]
+    public sealed class RelatedCustomerComponent : IComponent
+    {
+        public Game.Entity RelatedCustomer;
+    }
+
 }

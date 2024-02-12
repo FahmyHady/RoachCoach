@@ -28,13 +28,20 @@ namespace RoachCoach
 
                 var machineEntity = gameContext.CreateEntity()
                    .AddMachine()
+                   .AddMotor(int.MaxValue)//Will be replaced when linking
                    .AddTransform(transform.position, transform.rotation)
                    .AddId(entity.GetId().Value);
 
                 if (entity.HasTaco())
+                {
+                    machineEntity.AddTaco(1);
                     machineEntity.AddVisualRepresentation(VisualType.TacoMachine);
+                }
                 else if (entity.HasSoda())
+                {
+                    machineEntity.AddSoda(1);//just makes 1 soda at a time
                     machineEntity.AddVisualRepresentation(VisualType.SodaMachine);
+                }
             }
         }
 

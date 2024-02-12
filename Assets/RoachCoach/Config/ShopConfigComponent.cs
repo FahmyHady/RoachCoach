@@ -17,7 +17,7 @@ namespace RoachCoach
         public (Vector3, Quaternion) GetOutletTransform();
         public (Vector3, Quaternion)[] GetCustomerCreationSpots();
         public (Vector3, Quaternion)[] GetChefCreationSpots();
-        public (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] GetMachineCreationData();
+        public MachineCreationEntityData[] GetMachineCreationData();
         public (CommodityType, int) GetOrderData();
         int StartingChefNumber { get; }
         float ChefMovementSpeed { get; }

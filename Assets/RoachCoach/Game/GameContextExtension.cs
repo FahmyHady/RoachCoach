@@ -46,23 +46,6 @@ namespace RoachCoach
         }
 
 
-        public static Game.Entity CreateOrder(this GameContext context, Vector3 pos)
-        {
-            var gameConfig = ConfigContext.Instance.GetShopConfig().Value;
-            var randomOrder = gameConfig.GetOrderData();
-            var orderEntity = context.CreateEntity().AddOrder().AddTransform(pos, Quaternion.identity).AddFree();
-            switch (randomOrder.Item1)
-            {
-                case CommodityType.Taco:
-                    orderEntity.AddTaco(randomOrder.Item2).AddVisualRepresentation(VisualType.Taco);
-                    break;
-                case CommodityType.Soda:
-                    orderEntity.AddSoda(randomOrder.Item2).AddVisualRepresentation(VisualType.Soda);
-                    break;
-                default:
-                    break;
-            }
-            return orderEntity;
-        }
+   
     }
 }

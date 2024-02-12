@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Graphs;
 using UnityEngine;
+
 
 namespace RoachCoach
 {
@@ -15,6 +15,8 @@ namespace RoachCoach
             public Transform machineStandSpot;
             public Transform[] machinesCreationSpots;
         }
+
+
         [SerializeField, Range(0, 3)] int startingChefsNumber = 1;
         [SerializeField, Range(0, 5)] float chefOrderTakingDuration = 1;
         [SerializeField] float chefMoveSpeed = 3;
@@ -27,8 +29,7 @@ namespace RoachCoach
         [SerializeField] Transform[] customerCreationSpots;
         [SerializeField] Transform outletSpot;
 
-        [SerializeField] CommodityType[] possibleCommodityTypes;//This should be adjusted when a new machine is added
-        [SerializeField] Vector2Int minMaxCommodityAmount; //This can be based of a curve for example
+        Dictionary<CommodityType, Vector2Int> possibleCommodityTypesAndMinMaxValues;//This should be adjusted when a new machine is added
 
         public int StartingChefNumber => startingChefsNumber;
         public int MaxCustomerCount => maxCustomerNumber;
@@ -60,9 +61,9 @@ namespace RoachCoach
             }
             return values;
         }
-        public (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] GetMachineCreationData()
+        public MachineCreationEntityData[] GetMachineCreationData()
         {
-            (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[] values = new (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)[machineStandsCreationSpots.Sum(a => a.machinesCreationSpots.Length)];
+            MachineCreationEntityData[] values = new MachineCreationEntityData[machineStandsCreationSpots.Sum(a => a.machinesCreationSpots.Length)];
 
             for (int i = 0; i < machineStandsCreationSpots.Length; i++)
             {
@@ -70,12 +71,13 @@ namespace RoachCoach
 
                 for (int j = 0; j < relatedData.machinesCreationSpots.Length; j++)
                 {
-                    var currentMachine = values[j];
+                    MachineCreationEntityData currentMachine = default;
                     currentMachine.type = relatedData.commodityType;
                     currentMachine.posOfMachineStand = relatedData.machineStandSpot.position;
                     currentMachine.rotationOfMachineStand = relatedData.machinesCreationSpots[j].rotation;
                     currentMachine.posOfMachine = relatedData.machinesCreationSpots[j].position;
                     currentMachine.rotationOfMachine = relatedData.machinesCreationSpots[j].rotation;
+                    values[j] = currentMachine;
                 }
             }
 
@@ -91,8 +93,71 @@ namespace RoachCoach
 
         public (CommodityType, int) GetOrderData()
         {
-            return (possibleCommodityTypes.RandomElement(), UnityEngine.Random.Range(minMaxCommodityAmount.x, minMaxCommodityAmount.y + 1));
+            var order = possibleCommodityTypesAndMinMaxValues.RandomElement();
+            return (order.Key, UnityEngine.Random.Range(order.Value.x, order.Value.y + 1));
+        }
+
+        public void AddToPossibleOrders(CommodityType commodityType)
+        {
+            //Should be a dictionary but I don't have a seriliazable one handy
+            if (possibleCommodityTypesAndMinMaxValues.ContainsKey(commodityType))
+                possibleCommodityTypesAndMinMaxValues[commodityType] += Vector2Int.one;
+            else
+                possibleCommodityTypesAndMinMaxValues.Add(commodityType, new Vector2Int(1, 2));
+            Debug.Log("Order Added");
+
         }
     }
 
+    public struct MachineCreationEntityData
+    {
+        public CommodityType type;
+        public Vector3 posOfMachine;
+        public Quaternion rotationOfMachine;
+        public Vector3 posOfMachineStand;
+        public Quaternion rotationOfMachineStand;
+
+        public MachineCreationEntityData(CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)
+        {
+            this.type = type;
+            this.posOfMachine = posOfMachine;
+            this.rotationOfMachine = rotationOfMachine;
+            this.posOfMachineStand = posOfMachineStand;
+            this.rotationOfMachineStand = rotationOfMachineStand;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is MachineCreationEntityData other &&
+                   type == other.type &&
+                   posOfMachine.Equals(other.posOfMachine) &&
+                   rotationOfMachine.Equals(other.rotationOfMachine) &&
+                   posOfMachineStand.Equals(other.posOfMachineStand) &&
+                   rotationOfMachineStand.Equals(other.rotationOfMachineStand);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(type, posOfMachine, rotationOfMachine, posOfMachineStand, rotationOfMachineStand);
+        }
+
+        public void Deconstruct(out CommodityType type, out Vector3 posOfMachine, out Quaternion rotationOfMachine, out Vector3 posOfMachineStand, out Quaternion rotationOfMachineStand)
+        {
+            type = this.type;
+            posOfMachine = this.posOfMachine;
+            rotationOfMachine = this.rotationOfMachine;
+            posOfMachineStand = this.posOfMachineStand;
+            rotationOfMachineStand = this.rotationOfMachineStand;
+        }
+
+        public static implicit operator (CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand)(MachineCreationEntityData value)
+        {
+            return (value.type, value.posOfMachine, value.rotationOfMachine, value.posOfMachineStand, value.rotationOfMachineStand);
+        }
+
+        public static implicit operator MachineCreationEntityData((CommodityType type, Vector3 posOfMachine, Quaternion rotationOfMachine, Vector3 posOfMachineStand, Quaternion rotationOfMachineStand) value)
+        {
+            return new MachineCreationEntityData(value.type, value.posOfMachine, value.rotationOfMachine, value.posOfMachineStand, value.rotationOfMachineStand);
+        }
+    }
 }

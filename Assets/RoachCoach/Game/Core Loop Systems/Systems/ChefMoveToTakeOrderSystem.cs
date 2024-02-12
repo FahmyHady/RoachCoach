@@ -2,28 +2,26 @@ using Entitas;
 using System.Collections.Generic;
 using static RoachCoach.RoachCoachGameCustomerMatcher;
 using static RoachCoach.RoachCoachGameFreeMatcher;
-using static RoachCoach.RoachCoachGameOrderMatcher;
+using static RoachCoach.RoachCoachGameWaitingToPlaceOrderMatcher;
 using static RoachCoach.RoachCoachGameChefMatcher;
 using static RoachCoach.RoachCoachGameCharacterMatcher;
 using UnityEngine;
 namespace RoachCoach
 {
-    public class MoveToTakeOrderSystem : IExecuteSystem
+    public class ChefMoveToTakeOrderSystem : IExecuteSystem
     {
         private readonly GameContext gameContext;
         private readonly ConfigContext configContext;
-        private readonly IShopConfig shopConfig;
 
-        public MoveToTakeOrderSystem(GameContext gameContext, ConfigContext configContext) : base()
+        public ChefMoveToTakeOrderSystem(GameContext gameContext, ConfigContext configContext) : base()
         {
             this.gameContext = gameContext;
             this.configContext = configContext;
-            this.shopConfig = configContext.GetShopConfig().Value;
         }
 
         public void Execute()
         {
-            var customersWaitingToPlaceOrder = gameContext.GetEntities(Game.Matcher.AllOf(Free, Order, Customer, Character));
+            var customersWaitingToPlaceOrder = gameContext.GetEntities(Game.Matcher.AllOf(Free, WaitingToPlaceOrder, Customer, Character));
             if (customersWaitingToPlaceOrder.Length == 0) return;
             var freeChefs = gameContext.GetEntities(Game.Matcher.AllOf(Free, Chef, Character));
             int count = Mathf.Min(customersWaitingToPlaceOrder.Length, freeChefs.Length);
@@ -34,12 +32,13 @@ namespace RoachCoach
                 var customer = customersWaitingToPlaceOrder[i];
                 var chef = freeChefs[i];
                 customer.RemoveFree();
+                customer.RemoveWaitingToPlaceOrder();
                 chef.RemoveFree();
-
-                var customerSpot = gameContext.GetSpotAtLocation(customer.GetTransform().position);
-                var chefRelatedSpot = customerSpot.GetRelatedSpot().RelatedSpot;
+                //The chef spot related to the customer spot
+                var chefRelatedSpot = customer.GetRelatedSpot().RelatedSpot.GetRelatedSpot().RelatedSpot;
                 chef.AddTargetLocation(chefRelatedSpot.GetTransform().position);
                 chef.AddMovingToTakeAnOrder();
+                chef.AddRelatedCustomer(customer);
             }
 
         }

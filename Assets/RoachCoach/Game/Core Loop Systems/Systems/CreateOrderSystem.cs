@@ -2,7 +2,7 @@ using Entitas;
 using System.Collections.Generic;
 using static RoachCoach.RoachCoachGameChefMatcher;
 using static RoachCoach.RoachCoachGameDelayMatcher;
-using static RoachCoach.RoachCoachGameOrderMatcher;
+using static RoachCoach.RoachCoachGameTakingAnOrderMatcher;
 using static RoachCoach.RoachCoachGameCharacterMatcher;
 namespace RoachCoach
 {
@@ -22,8 +22,9 @@ namespace RoachCoach
         {
             foreach (var entity in entities)
             {
-                entity.RemoveOrder();
-                gameContext.CreateOrder(entity.GetTransform().position);
+                entity.RemoveTakingAnOrder();
+                CreateOrder(entity.GetRelatedCustomer().RelatedCustomer);
+                entity.RemoveRelatedCustomer();
                 entity.AddFree();
             }
         }
@@ -35,9 +36,25 @@ namespace RoachCoach
 
         protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context)
         {
-            return context.CreateCollector(Game.Matcher.AllOf(Chef, Character, Order).NoneOf(Delay));
+            return context.CreateCollector(Game.Matcher.AllOf(Chef, Character, TakingAnOrder).NoneOf(Delay));
         }
-
+        Game.Entity CreateOrder(Game.Entity relatedCustomer)
+        {
+            var randomOrder = shopConfig.GetOrderData();
+            var orderEntity = gameContext.CreateEntity().AddFree().AddOrder().AddRelatedCustomer(relatedCustomer);
+            switch (randomOrder.Item1)
+            {
+                case CommodityType.Taco:
+                    orderEntity.AddTaco(randomOrder.Item2).AddVisualRepresentation(VisualType.Taco);
+                    break;
+                case CommodityType.Soda:
+                    orderEntity.AddSoda(randomOrder.Item2).AddVisualRepresentation(VisualType.Soda);
+                    break;
+                default:
+                    break;
+            }
+            return orderEntity;
+        }
 
     }
 }

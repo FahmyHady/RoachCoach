@@ -20,9 +20,13 @@ MonoBehaviour:
   - {fileID: 8948641144421996453, guid: 3300f168292d55748b06f372edfc8324, type: 3}
   - {fileID: 3919459300482912206, guid: 2470e29a8727ef54e8e300ffc0a2c36b, type: 3}
   - {fileID: 462072185057123145, guid: 179bb9d1b64efa64eac3f9ed161574cd, type: 3}
-  itemBox: {fileID: 0}
-  machine: {fileID: 0}
-  machineStand: {fileID: 0}
   outlet: {fileID: 2042465160922250375, guid: fb990b215bb37434b9f785df51d7a9b0, type: 3}
+  itemBox: {fileID: 0}
+  sodaMachine: {fileID: 5893442562219950233, guid: 82682b18ff1fcfb44a33bdf2e0197907,
+    type: 3}
+  sodaMachineStand: {fileID: 5893442562219950233, guid: 3f2be4e999a31cc4c8f58c7700d516bd,
+    type: 3}
+  tacoMachine: {fileID: 0}
+  tacoMachineStand: {fileID: 0}
   sodaOrder: {fileID: 5515855008777161667, guid: 900fac68d0c6f0f43a50ac215b236932,
     type: 3}
