@@ -6,6 +6,7 @@ using static RoachCoach.RoachCoachGameOutletMatcher;
 using static RoachCoach.RoachCoachGameCharacterMatcher;
 using static RoachCoach.RoachCoachGameFreeMatcher;
 using UnityEngine;
+using System.Linq;
 namespace RoachCoach
 {
     public class CreateCustomerSystem : IExecuteSystem
@@ -21,33 +22,33 @@ namespace RoachCoach
 
         public void Execute()
         {
-            int maxCustomerCount = configContext.GetShopConfig().Value.MaxCustomerCount;
+            int maxCustomerCount = configContext.GetShopConfig().Value.CurrentCustomerCount;
             int currentCustomerCount = gameContext.GetEntities(Game.Matcher.AllOf(Customer, Character)).Length;
             int difference = maxCustomerCount - currentCustomerCount;
             if (difference <= 0) return;
-            var freeOutletSpots = gameContext.GetEntities(Game.Matcher.AllOf(Free, Outlet, Customer, Spot));
-            if (freeOutletSpots.Length == 0) return;
+            var freeOutletSpots = gameContext.GetEntities(Game.Matcher.AllOf(Free, Outlet, Customer, Spot)).ToList();
+            if (freeOutletSpots.Count == 0) return;
 
-            int countToCreate = Mathf.Min(difference, freeOutletSpots.Length);
-            var creationSpots = gameContext.GetEntities(Game.Matcher.AllOf(Free, Customer, Spot).NoneOf(Outlet));
+            int countToCreate = Mathf.Min(difference, freeOutletSpots.Count);
 
             for (int i = 0; i < countToCreate; i++)
             {
-                CreateCustomer(creationSpots.RandomElement(), freeOutletSpots.RandomElement());
+                var randomSpot = freeOutletSpots.RandomElement();
+                CreateCustomer(randomSpot);
+                freeOutletSpots.Remove(randomSpot);
             }
 
         }
 
-        Game.Entity CreateCustomer(Game.Entity creationSpot, Game.Entity targetSpot)
+        Game.Entity CreateCustomer(Game.Entity targetSpot)
         {
-            var creationTransform = creationSpot.GetTransform();
             var targetTransform = targetSpot.GetTransform();
             targetSpot.RemoveFree();
-
+            var creationSpot = gameContext.GetRandomEntryLocation();
             return gameContext.CreateEntity()
             .AddCharacter()
             .AddCustomer()
-            .AddTransform(creationTransform.position, creationTransform.rotation)
+            .AddTransform(creationSpot, default)
                 .AddMotor(configContext.GetShopConfig().Value.CustomerMovementSpeed)
                 .AddVisualRepresentation(VisualType.Customer)
                 .AddMovingToOrderSomething()

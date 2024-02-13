@@ -20,17 +20,17 @@ namespace RoachCoach
         {
             foreach (var entity in entities)
             {
-                entity.RemoveMovingToTakeAnOrder();
+                entity.RemoveMovingToMakeAnOrder();
                 var relatedMachine = entity.GetRelatedMachine().RelatedMachine;
                 var machinePreparationTime = relatedMachine.GetMotor().Value;
                 entity.AddDelay(machinePreparationTime);
-                entity.ad();//chef is taking order
+                entity.AddMakingAnOrder();//chef is taking order
             }
         }
 
         protected override bool Filter(Game.Entity entity)
         {
-            return !entity.HasTargetLocation() && entity.HasMovingToTakeAnOrder();
+            return !entity.HasTargetLocation() && entity.HasMovingToMakeAnOrder();
         }
 
         protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context)

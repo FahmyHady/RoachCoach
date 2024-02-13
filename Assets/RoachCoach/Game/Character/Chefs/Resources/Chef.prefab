@@ -104,7 +104,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4207906058345249296}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.2822832, y: -0, z: -0, w: 0.95933115}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
@@ -112,7 +112,7 @@ RectTransform:
   - {fileID: 6498247638607542340}
   m_Father: {fileID: 663017437272404913}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 2.634}
@@ -192,13 +192,15 @@ LookAtConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: -57.207, y: 0, z: 0}
   m_Roll: 0
   m_WorldUpObject: {fileID: 0}
-  m_UseUpObject: 1
+  m_UseUpObject: 0
   m_Active: 1
   m_IsLocked: 0
-  m_Sources: []
+  m_Sources:
+  - sourceTransform: {fileID: 663017437272404913}
+    weight: 1
 --- !u!1 &5774270505353685805
 GameObject:
   m_ObjectHideFlags: 0

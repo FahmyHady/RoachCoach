@@ -12,8 +12,7 @@ namespace RoachCoach
 
     //This doesn't seem to fit with how Entitas is supposed to work, but I'm putting it as a last resort
     [Context(typeof(GameContext))]
-    public sealed class DelayedActionComponent : IComponent
+    public sealed class DelayedDestroyComponent : IComponent
     {
-        public Action DelayedAction;
     }
 }

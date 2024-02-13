@@ -9,12 +9,12 @@ namespace RoachCoach
     {
         public CommodityType Type;
     }
-    [Context(typeof(GameContext))]
+    [Context(typeof(GameContext)), Event(EventTarget.Self)]
     public sealed class SodaComponent : IComponent
     {
         public int Value;
     }
-    [Context(typeof(GameContext))]
+    [Context(typeof(GameContext)), Event(EventTarget.Self)]
     public sealed class TacoComponent : IComponent
     {
         public int Value;

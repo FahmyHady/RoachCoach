@@ -27,21 +27,25 @@ namespace RoachCoach
                 entity.RemoveFree();
 
                 var machineEntity = gameContext.CreateEntity()
+                   .AddFree()
                    .AddMachine()
                    .AddMotor(int.MaxValue)//Will be replaced when linking
                    .AddTransform(transform.position, transform.rotation)
                    .AddId(entity.GetId().Value);
 
-                if (entity.HasTaco())
+                var commodity = gameContext.GetCommodityTypeAndValueRelatedToEntity(entity);
+                switch (commodity.type)
                 {
-                    machineEntity.AddTaco(1);
-                    machineEntity.AddVisualRepresentation(VisualType.TacoMachine);
+                    case CommodityType.Taco:
+                        machineEntity.AddTaco(commodity.value);
+                        machineEntity.AddVisualRepresentation(VisualType.TacoMachine);
+                        break;
+                    case CommodityType.Soda:
+                        machineEntity.AddSoda(commodity.value);//just makes 1 soda at a time
+                        machineEntity.AddVisualRepresentation(VisualType.SodaMachine);
+                        break;
                 }
-                else if (entity.HasSoda())
-                {
-                    machineEntity.AddSoda(1);//just makes 1 soda at a time
-                    machineEntity.AddVisualRepresentation(VisualType.SodaMachine);
-                }
+
             }
         }
 

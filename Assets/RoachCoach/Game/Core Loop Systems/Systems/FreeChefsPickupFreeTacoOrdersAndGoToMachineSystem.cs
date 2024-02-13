@@ -8,6 +8,7 @@ using static RoachCoach.RoachCoachGameTacoMatcher;
 using static RoachCoach.RoachCoachGameSpotMatcher;
 using static RoachCoach.RoachCoachGameMachineMatcher;
 using static RoachCoach.RoachCoachGameRelatedCustomerMatcher;
+using static RoachCoach.RoachCoachGameRelatedSpotMatcher;
 using UnityEngine;
 using System.Linq;
 using System;
@@ -32,7 +33,7 @@ namespace RoachCoach
             if (openOrders.Length == 0) return;
             var freeChefs = gameContext.GetEntities(Game.Matcher.AllOf(Free, Chef, Character)).ToList();
             if (freeChefs.Count == 0) return;
-            var openTacoMachines = gameContext.GetEntities(Game.Matcher.AllOf(Free, Machine, Taco).NoneOf(Spot)).ToList();
+            var openTacoMachines = gameContext.GetEntities(Game.Matcher.AllOf(Free, Machine, Taco, RelatedSpot).NoneOf(Spot)).ToList();
             if (openTacoMachines.Count == 0) return;
 
             int maxAmountCanFulfil = Mathf.Min(openTacoMachines.Count, freeChefs.Count, openOrders.Length);
@@ -58,12 +59,13 @@ namespace RoachCoach
 
                 chef.RemoveFree();
                 machine.RemoveFree();
-                int numberOfChefsWorkingOnThisOrder = order.GetRelatedChefsCount().RelatedChefsCount + 1;
-                order.AddRelatedChefsCount(numberOfChefsWorkingOnThisOrder);
-                if (numberOfChefsWorkingOnThisOrder >= orderValue)
+                int numberOfChefsWorkingOnThisOrder = order.HasRelatedChefsCount() ? order.GetRelatedChefsCount().Value + 1 : 1;
+                int relatedCustomerHasAlready = gameContext.GetCommodityTypeAndValueRelatedToEntity(order.GetRelatedCustomer().RelatedCustomer).value;
+                order.ReplaceRelatedChefsCount(numberOfChefsWorkingOnThisOrder);
+                if (numberOfChefsWorkingOnThisOrder >= orderValue - relatedCustomerHasAlready)
                     order.RemoveFree();
 
-                chef.AddTargetLocation(machine.GetTransform().position);
+                chef.AddTargetLocation(machine.GetRelatedSpot().RelatedSpot.GetTransform().position);//Cook Spot
                 chef.AddMovingToMakeAnOrder();
                 chef.AddRelatedOrder(order);
                 chef.AddRelatedMachine(machine);

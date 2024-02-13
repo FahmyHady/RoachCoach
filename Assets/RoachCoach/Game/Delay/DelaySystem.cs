@@ -29,10 +29,10 @@ namespace RoachCoach
                 {
                     delayedEntitiesWithElapsedTime.Remove(entity);
                     entity.RemoveDelay();
-                    if (entity.HasDelayedAction())
+                    if (entity.HasDelayedDestroy())
                     {
-                        entity.GetDelayedAction().DelayedAction?.Invoke();
-                        entity.RemoveDelayedAction();
+                        entity.RemoveDelayedDestroy();
+                        entity.AddDestroyed();
                     }
                 }
             }

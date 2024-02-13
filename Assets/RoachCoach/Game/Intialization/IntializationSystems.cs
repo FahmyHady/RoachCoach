@@ -13,7 +13,6 @@ namespace RoachCoach
         {
             //Intializers
             Add(new OutletIntializationSystem(gameContext, configContext));
-            Add(new CustomerIntializationSystem(gameContext, configContext));
             Add(new ChefIntializationSystem(gameContext, configContext));
             Add(new MachineIntializationSystem(gameContext, configContext));
 

@@ -17,28 +17,39 @@ namespace RoachCoach
         }
 
 
-        [SerializeField, Range(0, 3)] int startingChefsNumber = 1;
-        [SerializeField, Range(0, 5)] float chefOrderTakingDuration = 1;
-        [SerializeField] float chefMoveSpeed = 3;
-        [SerializeField] float customerSpeed = 4;
-        [SerializeField, Range(0, 3)] int maxCustomerNumber = 1;
-        [SerializeField, Range(0, 3)] int startingMachineStandsNumber = 1;
-
+        [SerializeField] int maxChefNumber;
+        [SerializeField] int currentChefNumber;
+        [SerializeField] int maxCustomerNumber;
+        [SerializeField] int currentCustomerNumber;
+        [SerializeField] float chefOrderTakingDuration;
+        [SerializeField] float chefMoveSpeed;
+        [SerializeField] float customerSpeed;
+        [SerializeField] int tacoPrice;
+        [SerializeField] int sodaPrice;
         [SerializeField] Transform[] chefCreationSpots;
         [SerializeField] MachineCreationData[] machineStandsCreationSpots;
-        [SerializeField] Transform[] customerCreationSpots;
         [SerializeField] Transform outletSpot;
 
-        Dictionary<CommodityType, Vector2Int> possibleCommodityTypesAndMinMaxValues;//This should be adjusted when a new machine is added
+        Dictionary<CommodityType, Vector2Int> possibleCommodityTypesAndMinMaxValues = new Dictionary<CommodityType, Vector2Int>();//This should be adjusted when a new machine is added
 
-        public int StartingChefNumber => startingChefsNumber;
-        public int MaxCustomerCount => maxCustomerNumber;
-        public int StartingMachineStands => startingMachineStandsNumber;
+        public int MaxChefNumber
+        {
+            get => maxChefNumber; set { maxChefNumber = value; }
+        }
+        public int CurrentChefNumber
+        {
+            get => currentChefNumber; set { currentChefNumber = value; }
+        }
+        public int MaxCustomerCount
+        {
+            get => maxCustomerNumber; set { maxCustomerNumber = value; }
+        }
+        public int CurrentCustomerCount { get => currentCustomerNumber; set { currentCustomerNumber = value; } }
 
-        public float ChefMovementSpeed => chefMoveSpeed;
-        public float ChefOrderTakingDuration => chefOrderTakingDuration;
+        public float ChefMovementSpeed { get => chefMoveSpeed; set { chefMoveSpeed = value; } }
+        public float ChefOrderTakingDuration { get => chefOrderTakingDuration; set { chefOrderTakingDuration = value; } }
 
-        public float CustomerMovementSpeed => customerSpeed;
+        public float CustomerMovementSpeed { get => customerSpeed; set { customerSpeed = value; } }
 
         public (Vector3, Quaternion)[] GetChefCreationSpots()
         {
@@ -51,20 +62,11 @@ namespace RoachCoach
             return values;
         }
 
-        public (Vector3, Quaternion)[] GetCustomerCreationSpots()
-        {
-            (Vector3, Quaternion)[] values = new (Vector3, Quaternion)[customerCreationSpots.Length];
-            for (int i = 0; i < customerCreationSpots.Length; i++)
-            {
-                values[i].Item1 = customerCreationSpots[i].position;
-                values[i].Item2 = customerCreationSpots[i].rotation;
-            }
-            return values;
-        }
+
         public MachineCreationEntityData[] GetMachineCreationData()
         {
             MachineCreationEntityData[] values = new MachineCreationEntityData[machineStandsCreationSpots.Sum(a => a.machinesCreationSpots.Length)];
-
+            int index = 0;
             for (int i = 0; i < machineStandsCreationSpots.Length; i++)
             {
                 var relatedData = machineStandsCreationSpots[i];
@@ -77,20 +79,18 @@ namespace RoachCoach
                     currentMachine.rotationOfMachineStand = relatedData.machinesCreationSpots[j].rotation;
                     currentMachine.posOfMachine = relatedData.machinesCreationSpots[j].position;
                     currentMachine.rotationOfMachine = relatedData.machinesCreationSpots[j].rotation;
-                    values[j] = currentMachine;
+                    values[index] = currentMachine;
+                    index++;
                 }
             }
 
             return values;
         }
 
-
-
         public (Vector3, Quaternion) GetOutletTransform()
         {
             return (outletSpot.position, outletSpot.rotation);
         }
-
         public (CommodityType, int) GetOrderData()
         {
             var order = possibleCommodityTypesAndMinMaxValues.RandomElement();
@@ -101,12 +101,19 @@ namespace RoachCoach
         {
             //Should be a dictionary but I don't have a seriliazable one handy
             if (possibleCommodityTypesAndMinMaxValues.ContainsKey(commodityType))
-                possibleCommodityTypesAndMinMaxValues[commodityType] += Vector2Int.one;
+            {
+                var vector2Int = possibleCommodityTypesAndMinMaxValues[commodityType];
+                vector2Int = new Vector2Int(vector2Int.x, vector2Int.y + 2);//increase order max count
+                possibleCommodityTypesAndMinMaxValues[commodityType] = vector2Int;
+            }
             else
                 possibleCommodityTypesAndMinMaxValues.Add(commodityType, new Vector2Int(1, 2));
-            Debug.Log("Order Added");
 
         }
+        public int TacoPrice { get => tacoPrice; set => tacoPrice = value; }
+        public int SodaPrice { get => sodaPrice; set => sodaPrice = value; }
+
+
     }
 
     public struct MachineCreationEntityData

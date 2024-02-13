@@ -17,7 +17,7 @@ namespace RoachCoach
         public GameObject tacoMachine;
         public GameObject tacoMachineStand;
         [Space, Header("Orders")]
-        public GameObject sodaOrder;
+        public GameObject commodityOrder;
         public GameObject GetPrefab(VisualType type)
         {
             switch (type)
@@ -34,9 +34,8 @@ namespace RoachCoach
                     return tacoMachineStand;
                 case VisualType.Outlet:
                     return outlet;
-                case VisualType.Soda:
-                    return sodaOrder;
-                case VisualType.Taco:
+                case VisualType.Commodity:
+                    return commodityOrder;
                 case VisualType.SodaMachine:
                     return sodaMachine;
                 case VisualType.SodaMachineStand:

@@ -4,6 +4,8 @@ using static RoachCoach.RoachCoachGameChefMatcher;
 using static RoachCoach.RoachCoachGameDelayMatcher;
 using static RoachCoach.RoachCoachGameTakingAnOrderMatcher;
 using static RoachCoach.RoachCoachGameCharacterMatcher;
+using UnityEngine;
+using System;
 namespace RoachCoach
 {
     public class CreateOrderSystem : ReactiveSystem<Game.Entity>
@@ -20,18 +22,18 @@ namespace RoachCoach
         }
         protected override void Execute(List<Game.Entity> entities)
         {
-            foreach (var entity in entities)
+            foreach (var chef in entities)
             {
-                entity.RemoveTakingAnOrder();
-                CreateOrder(entity.GetRelatedCustomer().RelatedCustomer);
-                entity.RemoveRelatedCustomer();
-                entity.AddFree();
+                chef.RemoveTakingAnOrder();
+                CreateOrder(chef.GetRelatedCustomer().RelatedCustomer);
+                chef.RemoveRelatedCustomer();
+                chef.AddFree();
             }
         }
 
         protected override bool Filter(Game.Entity entity)
         {
-            return !entity.HasDelay() && entity.HasOrder();
+            return !entity.HasDelay() && entity.HasTakingAnOrder();
         }
 
         protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context)
@@ -41,19 +43,31 @@ namespace RoachCoach
         Game.Entity CreateOrder(Game.Entity relatedCustomer)
         {
             var randomOrder = shopConfig.GetOrderData();
-            var orderEntity = gameContext.CreateEntity().AddFree().AddOrder().AddRelatedCustomer(relatedCustomer);
+            var customerTransform = relatedCustomer.GetTransform();
+            var orderPos = customerTransform.position + Vector3.up * 3;
+            var orderEntity = gameContext.CreateEntity()
+                .AddFree()
+                .AddOrder()
+                .AddRelatedCustomer(relatedCustomer)
+                .AddTransform(orderPos, Quaternion.Euler(35,0,0))
+                .AddCommodity(randomOrder, true)
+                .AddMoney(GetPrice(randomOrder));
+            return orderEntity;
+        }
+
+        private int GetPrice((CommodityType, int) randomOrder)
+        {
+            int priceOfOne = 0;
             switch (randomOrder.Item1)
             {
                 case CommodityType.Taco:
-                    orderEntity.AddTaco(randomOrder.Item2).AddVisualRepresentation(VisualType.Taco);
+                    priceOfOne = shopConfig.TacoPrice;
                     break;
                 case CommodityType.Soda:
-                    orderEntity.AddSoda(randomOrder.Item2).AddVisualRepresentation(VisualType.Soda);
-                    break;
-                default:
+                    priceOfOne = shopConfig.SodaPrice;
                     break;
             }
-            return orderEntity;
+            return priceOfOne * randomOrder.Item2;
         }
 
     }

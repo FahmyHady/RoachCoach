@@ -35,7 +35,7 @@ namespace RoachCoach
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-                circleFill.fillAmount = (1 - elapsed) / duration;
+                circleFill.fillAmount = 1 - (elapsed / duration);
                 yield return null;
             }
         }

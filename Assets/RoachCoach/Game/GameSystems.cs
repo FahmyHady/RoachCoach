@@ -11,6 +11,7 @@ namespace RoachCoach
         {
             Add(new IntializationSystems(gameContext, configContext));
             Add(new CreationSystems(gameContext, configContext));
+            Add(new CoreLoopSystems(gameContext, configContext));
             Add(new DelaySystem(gameContext));
             Add(new MoveToTargetSystem(gameContext));
             //Add(new PlaceOrderSystem(gameContext, configContext));
