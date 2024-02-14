@@ -102,9 +102,9 @@ namespace RoachCoach
 
         void CreateMachineRelatedSpots(Game.Entity machineEntity)
         {
-            var machinePreprationSpotLocation = ((IMachineVisual)machineEntity.GetVisualReference().visualInterface).GetPreparationSpotLocation();
+            var machinePreprationSpot = ((IMachineVisual)machineEntity.GetVisualReference().visualInterface).GetPreparationSpotLocation();
             int id = machineEntity.GetId().Value;
-            var relatedPreprationSlot = gameContext.CreateSpot(machinePreprationSpotLocation, Quaternion.identity/* item.chefSpot.rotation*/).AddChef().AddMachine().AddId(id);
+            var relatedPreprationSlot = gameContext.CreateSpot(machinePreprationSpot.pos,machinePreprationSpot.rot).AddChef().AddMachine().AddId(id);
             machineEntity.AddRelatedSpot(relatedPreprationSlot);
         }
     }

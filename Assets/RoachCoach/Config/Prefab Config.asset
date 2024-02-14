@@ -28,7 +28,7 @@ MonoBehaviour:
     type: 3}
   tacoMachine: {fileID: 5893442562219950233, guid: 2592eefaa586ee040a3d77eda099ed4b,
     type: 3}
-  tacoMachineStand: {fileID: 5893442562219950233, guid: 33c120a11df8009478804c78245a8349,
+  tacoMachineStand: {fileID: 5893442562219950233, guid: fcc9b4e4d40dffb4792076eff17fa7ed,
     type: 3}
   commodityOrder: {fileID: 5515855008777161667, guid: 900fac68d0c6f0f43a50ac215b236932,
     type: 3}

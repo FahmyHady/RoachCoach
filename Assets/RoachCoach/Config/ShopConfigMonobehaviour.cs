@@ -76,7 +76,7 @@ namespace RoachCoach
                     MachineCreationEntityData currentMachine = default;
                     currentMachine.type = relatedData.commodityType;
                     currentMachine.posOfMachineStand = relatedData.machineStandSpot.position;
-                    currentMachine.rotationOfMachineStand = relatedData.machinesCreationSpots[j].rotation;
+                    currentMachine.rotationOfMachineStand = relatedData.machineStandSpot.rotation;
                     currentMachine.posOfMachine = relatedData.machinesCreationSpots[j].position;
                     currentMachine.rotationOfMachine = relatedData.machinesCreationSpots[j].rotation;
                     values[index] = currentMachine;

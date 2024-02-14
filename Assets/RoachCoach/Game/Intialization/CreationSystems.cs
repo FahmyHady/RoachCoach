@@ -14,6 +14,7 @@ namespace RoachCoach
             //Creators
             Add(new CreateOutletSystem(gameContext,configContext));
             Add(new CreateMachineSystem(gameContext,configContext));
+            Add(new CreateMachineStandSystem(gameContext,configContext));
             Add(new CreateChefSystem(gameContext,configContext));
             Add(new CreateCustomerSystem(gameContext, configContext));
             Add(new CreateOrderSystem(gameContext, configContext));

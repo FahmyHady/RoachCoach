@@ -52,7 +52,7 @@ namespace RoachCoach
                 .AddMotor(configContext.GetShopConfig().Value.CustomerMovementSpeed)
                 .AddVisualRepresentation(VisualType.Customer)
                 .AddMovingToOrderSomething()
-                .AddTargetLocation(targetTransform.position)
+                .AddTargetLocation(targetTransform.position, targetTransform.rotation)
                 .AddRelatedSpot(targetSpot); //Customer Spot
 
         }

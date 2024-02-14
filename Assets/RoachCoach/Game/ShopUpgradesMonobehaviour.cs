@@ -10,6 +10,8 @@ using static RoachCoach.RoachCoachGameSodaMatcher;
 using static RoachCoach.RoachCoachGameTacoMatcher;
 using static RoachCoach.RoachCoachGameChefMatcher;
 using static RoachCoach.RoachCoachGameOutletMatcher;
+using static RoachCoach.RoachCoachGameCharacterMatcher;
+using static RoachCoach.RoachCoachGameMotorMatcher;
 namespace RoachCoach
 {
     public enum UpgradeType
@@ -95,6 +97,11 @@ namespace RoachCoach
         {
             float newSpeed = shopConfig.ChefMovementSpeed + 0.5f;
             shopConfig.ChefMovementSpeed = newSpeed;
+            var chefs = GameContext.Instance.GetEntities(Game.Matcher.AllOf(Chef, Character, Motor));
+            foreach (var chef in chefs)
+            {
+                chef.ReplaceMotor(newSpeed);
+            }
             if (newSpeed > 10)//we can setup the max in config or elsewhere
                 return true;
             return false;

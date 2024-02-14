@@ -31,7 +31,7 @@ namespace RoachCoach
                 if (DoIHaveEnoughToFulfillOrder(customer, order))
                 {
                     order.AddFulfilled();
-                    customer.AddTargetLocation(gameContext.GetRandomLeavingLocation());
+                    customer.AddTargetLocation(gameContext.GetRandomLeavingLocation(), Quaternion.identity);
                     customer.AddDelay(5);
                     customer.AddDelayedDestroy();
                     customer.GetRelatedSpot().RelatedSpot.AddFree();

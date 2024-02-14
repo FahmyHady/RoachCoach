@@ -34,8 +34,9 @@ namespace RoachCoach
                 //A drive-through window but the chef delivers to a different place
                 //All customers can have same delivery spot or in this case, each has a unique one
                 var relatedCustomerSpot = chef.GetRelatedOrder().RelatedOrder.GetRelatedCustomer().RelatedCustomer.GetRelatedSpot().RelatedSpot;
-                var chefDeliverySpotRelatingToCustomerSpot = relatedCustomerSpot.GetRelatedSpot().RelatedSpot; //Delivery spot
-                chef.AddTargetLocation(chefDeliverySpotRelatingToCustomerSpot.GetTransform().position);
+                //Delivery spot location
+                var chefDeliverySpotRelatingToCustomerSpotTransform = relatedCustomerSpot.GetRelatedSpot().RelatedSpot.GetTransform();
+                chef.AddTargetLocation(chefDeliverySpotRelatingToCustomerSpotTransform.position, chefDeliverySpotRelatingToCustomerSpotTransform.rotation);
                 chef.AddMovingToDeliverAnOrder();
 
             }

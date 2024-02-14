@@ -20,9 +20,9 @@ namespace RoachCoach
             base.Link(entity);
             linkedEntity.ReplaceMotor(machineData.makingStuffSpeed);
         }
-        public Vector3 GetPreparationSpotLocation()
+        public (Vector3 pos, Quaternion rot) GetPreparationSpotLocation()
         {
-            return cookSpot.position;
+            return (cookSpot.position, cookSpot.rotation);
         }
 
         public MachineData GetMachineData()

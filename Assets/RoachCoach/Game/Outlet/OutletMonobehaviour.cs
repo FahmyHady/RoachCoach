@@ -14,13 +14,15 @@ namespace RoachCoach
         }
         [SerializeField] RelatedTransforms[] customerSpots;
 
-        public (Vector3 customerSpot, Vector3 chefSpot)[] GetSpotLocations()
+        public (Vector3 customerSpotPos, Quaternion customerSpotRot, Vector3 chefSpotPos, Quaternion chefSpotRot)[] GetSpotLocations()
         {
-            (Vector3 customerSpot, Vector3 chefSpot)[] spots = new (Vector3 customerSpot, Vector3 chefSpot)[customerSpots.Length];
+            (Vector3 customerSpotPos, Quaternion customerSpotRot, Vector3 chefSpotPos, Quaternion chefSpotRot)[] spots = new (Vector3 customerSpotPos, Quaternion customerSpotRot, Vector3 chefSpotPos, Quaternion chefSpotRot)[customerSpots.Length];
             for (int i = 0; i < customerSpots.Length; i++)
             {
-                spots[i].customerSpot = customerSpots[i].one.position;
-                spots[i].chefSpot = customerSpots[i].two.position;
+                spots[i].customerSpotPos = customerSpots[i].one.position;
+                spots[i].customerSpotRot = customerSpots[i].one.rotation;
+                spots[i].chefSpotPos = customerSpots[i].two.position;
+                spots[i].chefSpotRot = customerSpots[i].two.rotation;
             }
             return spots;
         }

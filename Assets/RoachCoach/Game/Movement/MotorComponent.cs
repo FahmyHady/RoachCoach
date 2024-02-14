@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace RoachCoach
 {
-    [Context(typeof(GameContext))]
-    public sealed class TargetLocationComponent : IComponent
+    [Context(typeof(GameContext)), Event(EventTarget.Self)]
+    public sealed class MotorComponent : IComponent
     {
-        public Vector3 targetPos;
+        public float Value;
     }
 }

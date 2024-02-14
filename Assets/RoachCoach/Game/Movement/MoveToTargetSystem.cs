@@ -34,6 +34,7 @@ namespace RoachCoach
                 }
                 else
                 {
+                    entity.ReplaceTransform(targetLocation.targetPos, targetLocation.targetRot);
                     entity.RemoveTargetLocation();
                 }
             }

@@ -5,18 +5,18 @@ using UnityEngine;
 
 namespace RoachCoach
 {
-    public interface IVisual 
+    public interface IVisual
     {
         public void Link(Entity entity);
     }
-    public interface IOutletVisual:IVisual
+    public interface IOutletVisual : IVisual
     {
-        public (Vector3 customerSpot,Vector3 chefSpot)[] GetSpotLocations();
+        public (Vector3 customerSpotPos, Quaternion customerSpotRot, Vector3 chefSpotPos, Quaternion chefSpotRot)[] GetSpotLocations();
     }
     public interface IMachineVisual : IVisual
     {
         public MachineMonobehaviour.MachineData GetMachineData();
-        public Vector3 GetPreparationSpotLocation();
+        public (Vector3 pos,Quaternion rot) GetPreparationSpotLocation();
     }
 
 }

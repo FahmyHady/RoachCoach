@@ -64,8 +64,8 @@ namespace RoachCoach
             foreach (var item in outLetSlots)
             {
                 //rotation can be added later, it's supposed to define where the character faces when standing in this spot
-                var relatedChefSlot = gameContext.CreateSpot(item.chefSpot, Quaternion.identity/* item.chefSpot.rotation*/).AddChef().AddOutlet().AddId(id);
-                var customerSlot = gameContext.CreateSpot(item.customerSpot, Quaternion.identity/* item.customerSpot.rotation*/).AddCustomer().AddOutlet().AddRelatedSpot(relatedChefSlot).AddId(id);
+                var relatedChefSlot = gameContext.CreateSpot(item.chefSpotPos,  item.chefSpotRot).AddChef().AddOutlet().AddId(id);
+                var customerSlot = gameContext.CreateSpot(item.customerSpotPos, item.customerSpotRot).AddCustomer().AddOutlet().AddRelatedSpot(relatedChefSlot).AddId(id);
             }
         }
     }

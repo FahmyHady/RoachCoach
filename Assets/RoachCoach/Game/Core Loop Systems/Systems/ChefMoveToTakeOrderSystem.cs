@@ -35,8 +35,8 @@ namespace RoachCoach
                 customer.RemoveWaitingToPlaceOrder();
                 chef.RemoveFree();
                 //The chef spot related to the customer spot
-                var chefRelatedSpot = customer.GetRelatedSpot().RelatedSpot.GetRelatedSpot().RelatedSpot;
-                chef.AddTargetLocation(chefRelatedSpot.GetTransform().position);
+                var chefRelatedSpotTransform = customer.GetRelatedSpot().RelatedSpot.GetRelatedSpot().RelatedSpot.GetTransform();
+                chef.AddTargetLocation(chefRelatedSpotTransform.position, chefRelatedSpotTransform.rotation);
                 chef.AddMovingToTakeAnOrder();
                 chef.AddRelatedCustomer(customer);
             }

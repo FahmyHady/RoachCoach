@@ -65,7 +65,9 @@ namespace RoachCoach
                 if (numberOfChefsWorkingOnThisOrder >= orderValue - relatedCustomerHasAlready)
                     order.RemoveFree();
 
-                chef.AddTargetLocation(machine.GetRelatedSpot().RelatedSpot.GetTransform().position);//Cook Spot
+                //Cook spot transform
+                var cookSpot = machine.GetRelatedSpot().RelatedSpot.GetTransform();
+                chef.AddTargetLocation(cookSpot.position, cookSpot.rotation);//Cook Spot
                 chef.AddMovingToMakeAnOrder();
                 chef.AddRelatedOrder(order);
                 chef.AddRelatedMachine(machine);
